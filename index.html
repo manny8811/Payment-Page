@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            padding: 15px;
+            background: #f5f5f5;
+        }
+        .payment-container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 15px;
+            background: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border-radius: 8px;
+        }
+        .payment-button {
+            display: inline-block;
+            background-color: #FFA343;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 16px;
+            margin: 10px 0;
+            transition: background-color 0.3s;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            text-align: center;
+        }
+        .payment-button:hover {
+            background-color: #FF8C00;
+        }
+        .payment-info {
+            margin: 10px 0;
+            font-size: 14px;
+            color: #666;
+            text-align: center;
+        }
+        .upi-id {
+            background-color: #f5f5f5;
+            padding: 8px;
+            border-radius: 4px;
+            margin: 5px 0;
+            font-family: monospace;
+            font-size: 14px;
+            display: inline-block;
+        }
+        .copy-button {
+            background-color: #FFA343;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            color: white;
+            cursor: pointer;
+            font-size: 14px;
+            margin-left: 5px;
+            vertical-align: middle;
+        }
+        .copy-button:hover {
+            background-color: #FF8C00;
+        }
+        .divider {
+            height: 1px;
+            background: #eee;
+            margin: 15px 0;
+        }
+        h2, h3 {
+            color: #FFA343;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        .bank-details table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+        .bank-details td {
+            padding: 8px 4px;
+            border-bottom: 1px solid #eee;
+            word-break: break-word;
+        }
+        .bank-details td:first-child {
+            font-weight: bold;
+            width: 40%;
+            color: #666;
+        }
+    </style>
+    <script>
+        // Function to copy UPI ID
+        function copyUPI() {
+            const upiID = 'tinkering@barodampay';
+            navigator.clipboard.writeText(upiID)
+                .then(() => alert('UPI ID copied to clipboard!'))
+                .catch(() => fallbackCopyTextToClipboard(upiID));
+        }
+
+        // Fallback for older browsers
+        function fallbackCopyTextToClipboard(text) {
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            try {
+                document.execCommand('copy');
+                alert('UPI ID copied to clipboard!');
+            } catch (err) {
+                alert('Failed to copy UPI ID. Please copy manually.');
+            }
+            document.body.removeChild(textArea);
+        }
+
+        // Redirect to UPI payment
+        function payNow() {
+            const upiLink = "https://upi://pay?pa=tinkering@barodampay&pn=Tinkering_Institute&am=299.00&cu=INR";
+
+            // Open UPI link in a safe, recognizable format
+            const linkElement = document.createElement('a');
+            linkElement.href = upiLink;
+            linkElement.target = "_blank";
+            document.body.appendChild(linkElement);
+            linkElement.click();
+            document.body.removeChild(linkElement);
+
+            // Display fallback message
+            setTimeout(() => {
+                alert("If the UPI app did not open, please use the UPI ID: tinkering@barodampay in your UPI app manually.");
+            }, 2000);
+        }
+    </script>
+</head>
+<body>
+    <div class="payment-container">
+        <h2>AI Webinar Payment</h2>
+        <div class="payment-info">
+            <strong style="font-size: 18px;">Amount: ₹299/-</strong>
+        </div>
+
+        <div class="divider"></div>
+        
+        <div class="upi-container">
+            <h3>Pay via UPI ID</h3>
+            <div>
+                <span class="upi-id">tinkering@barodampay</span>
+                <button onclick="copyUPI()" class="copy-button">Copy</button>
+            </div>
+        </div>
+        
+        <!-- Single Pay Button -->
+        <button onclick="payNow()" class="payment-button">
+            Pay Now
+        </button>
+
+        <div class="divider"></div>
+        
+        <div class="bank-details">
+            <h3>Bank Account Details</h3>
+            <table>
+                <tr>
+                    <td>Bank</td>
+                    <td>State Bank of India</td>
+                </tr>
+                <tr>
+                    <td>Account Holder</td>
+                    <td>Manish Prakash Gupta</td>
+                </tr>
+                <tr>
+                    <td>Account Number</td>
+                    <td>30158888548</td>
+                </tr>
+                <tr>
+                    <td>IFSC Code</td>
+                    <td>SBIN0000063</td>
+                </tr>
+                <tr>
+                    <td>MICR Code</td>
+                    <td>734002102</td>
+                </tr>
+                <tr>
+                    <td>Branch Code</td>
+                    <td>000063</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
